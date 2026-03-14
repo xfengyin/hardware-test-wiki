@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>硬件测试知识库 | HardwareTest Wiki</title>
+  <meta name="description" content="收录硬件测试工程师的实战经验与技术分享">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {500: '#0EA5E9', 600: '#0284c7'},
+            accent: {400: '#34d399', 500: '#10B981'},
+            dark: {bg: '#0F172A', card: '#1E293B', border: '#334155', text: '#F1F5F9', muted: '#94A3B8'}
+          },
+          fontFamily: {sans: ['Inter', -apple-system, sans-serif], mono: ['JetBrains Mono', monospace]}
+        }
+      }
+    }
+  </script>
+  <style>
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+    .card{background:white;dark-background:#1E293B;border:1px solid #e2e8f0;dark-border:1px solid #334155;border-radius:.75rem;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:all .3s}
+    .card:hover{box-shadow:0 10px 15px -3px rgba(0,0,0,.1);transform:translateY(-2px)}
+    .card-gradient{position:relative;overflow:hidden}
+    .card-gradient::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0EA5E9,#22d3ee)}
+    .tag{display:inline-flex;align-items:center;padding:.25rem .75rem;border-radius:9999px;font-size:.75rem;font-weight:500}
+    .grid-bg{background-image:linear-gradient(rgba(14,165,233,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.05) 1px,transparent 1px);background-size:40px 40px}
+    pre{background:#1e293b;border-radius:.5rem;padding:1rem;overflow-x:auto}
+    code{font-family:'JetBrains Mono',monospace;font-size:.875rem}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 dark:bg-dark-bg">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur-lg bg-white/80 dark:bg-dark-bg/80 border-b border-slate-200 dark:border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-cyan-400 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-lg">⚡</span>
+          </div>
+          <span class="font-mono font-semibold text-lg text-slate-900 dark:text-dark-text">HardwareTest</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-card">
+            <span id="theme-icon" class="text-xl">🌙</span>
+          </button>
+          <a href="https://github.com/xfengyin/hardware-test-wiki" target="_blank" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-card">
+            <svg class="w-5 h-5 text-slate-600 dark:text-dark-muted" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="relative py-16 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-900">
+      <div class="absolute inset-0 grid-bg opacity-30"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">⚡ 硬件测试知识库</h1>
+          <p class="text-lg text-slate-300 mb-8">收录硬件测试工程师的实战经验与技术分享</p>
+          <div class="flex justify-center gap-8 text-slate-400">
+            <div><span class="text-2xl font-mono font-bold text-primary-400" id="stat-articles">0</span><br/><span class="text-sm">知识文章</span></div>
+            <div><span class="text-2xl font-mono font-bold text-accent-400" id="stat-contributors">0</span><br/><span class="text-sm">贡献者</span></div>
+            <div><span class="text-2xl font-mono font-bold text-cyan-400" id="stat-total">0</span><br/><span class="text-sm">总条目</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-3 mb-8">
+          <span class="tag bg-primary-500 text-white">全部</span>
+          <span class="tag bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">📝 知识文章</span>
+          <span class="tag bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">🔌 硬件</span>
+          <span class="tag bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">❓ 问答</span>
+        </div>
+
+        <div id="issues-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="text-center py-20 col-span-full">
+            <div class="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-slate-500">加载中...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">⚡</span>
+          <span class="font-mono font-semibold text-slate-900 dark:text-dark-text">HardwareTest</span>
+        </div>
+        <div class="text-sm text-slate-500 dark:text-dark-muted">
+          <p>© 2026 · 收录硬件测试工程师的实战经验</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Detail Modal -->
+  <div id="detail-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50" onclick="closeDetail()"></div>
+    <div class="absolute inset-4 md:inset-8 bg-white dark:bg-dark-bg rounded-xl overflow-hidden flex flex-col">
+      <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-dark-border">
+        <button onclick="closeDetail()" class="flex items-center gap-2 text-slate-600 dark:text-dark-muted hover:text-primary-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          返回
+        </button>
+        <a id="detail-github-link" href="#" target="_blank" class="text-primary-500 hover:underline">GitHub 查看 →</a>
+      </div>
+      <div id="detail-content" class="flex-1 overflow-y-auto p-6 md:p-8">
+        <div class="max-w-4xl mx-auto">
+          <div id="detail-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const REPO_OWNER = 'xfengyin';
+    const REPO_NAME = 'hardware-test-wiki';
+    let allIssues = [];
+
+    // Dark mode
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      document.getElementById('theme-icon').textContent = '☀️';
+    }
+
+    // GitHub API
+    async function fetchIssues() {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues?state=open&per_page=100`, {
+          headers: { 'Accept': 'application/vnd.github.v3+json' }
+        });
+        const data = await res.json();
+        return Array.isArray(data) ? data.filter(i => !i.pull_request) : [];
+      } catch(e) { console.error(e); return []; }
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr), now = new Date();
+      const diff = Math.floor((now - d) / (1000*60*60*24));
+      if (diff===0) return '今天'; if(diff===1) return '昨天';
+      if(diff<7) return diff+'天前'; if(diff<30) return Math.floor(diff/7)+'周前';
+      if(diff<365) return Math.floor(diff/30)+'月前'; return Math.floor(diff/365)+'年前';
+    }
+
+    function getLabelClass(name) {
+      const map = {'article':'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400','hardware':'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400','question':'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'};
+      return map[name?.toLowerCase()] || 'bg-slate-100 text-slate-700';
+    }
+
+    function renderMarkdown(text) {
+      if (!text) return '';
+      let html = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      html = html.replace(/```(\w+)?\n([\s\S]*?)```/g,'<pre><code>$2</code></pre>');
+      html = html.replace(/`([^`]+)`/g,'<code class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm">$1</code>');
+      html = html.replace(/^### (.+)$/gm,'<h3 class="text-lg font-semibold mt-6 mb-3">$1</h3>');
+      html = html.replace(/^## (.+)$/gm,'<h2 class="text-xl font-semibold mt-8 mb-4">$1</h2>');
+      html = html.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" class="text-primary-500 hover:underline" target="_blank">$1</a>');
+      html = html.replace(/^- (.+)$/gm,'<li class="ml-4">$1</li>');
+      html = html.replace(/\n\n/g,'</p><p class="my-4">');
+      return '<p class="my-4">'+html+'</p>';
+    }
+
+    async function init() {
+      allIssues = await fetchIssues();
+      
+      const contributors = [...new Set(allIssues.map(i => i.user.login))];
+      document.getElementById('stat-total').textContent = allIssues.length;
+      document.getElementById('stat-articles').textContent = allIssues.filter(i=>i.labels.some(l=>l.name==='article')).length;
+      document.getElementById('stat-contributors').textContent = contributors.length;
+
+      const grid = document.getElementById('issues-grid');
+      if (allIssues.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-20"><div class="text-6xl mb-4">📭</div><h3 class="text-xl font-semibold text-slate-900 dark:text-dark-text mb-2">暂无内容</h3><p class="text-slate-500 mb-4">成为第一个贡献者！</p><a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/issues/new?labels=article" target="_blank" class="inline-block px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600">提交文章</a></div>`;
+        return;
+      }
+
+      grid.innerHTML = allIssues.map((issue, i) => `
+        <div class="card card-gradient cursor-pointer transform hover:-translate-y-1" style="animation-delay:${i*50}ms" onclick="showDetail(${issue.number})">
+          <div class="p-6">
+            <div class="flex flex-wrap gap-2 mb-3">
+              ${issue.labels.map(l => `<span class="tag" style="background-color:#${l.color}20;color:#${l.color}">${l.name}</span>`).join('')}
+            </div>
+            <h3 class="text-lg font-semibold text-slate-900 dark:text-dark-text mb-2 hover:text-primary-500">${issue.title}</h3>
+            <p class="text-slate-600 dark:text-dark-muted text-sm line-clamp-2 mb-4">${(issue.body||'').substring(0,120)}...</p>
+            <div class="flex items-center justify-between text-sm text-slate-500 dark:text-dark-muted">
+              <div class="flex items-center gap-3">
+                <span>💬 ${issue.comments}</span>
+                <span>👍 ${issue.reactions?.total_count||0}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <img src="${issue.user.avatar_url}" class="w-5 h-5 rounded-full"/>
+                <span>${issue.user.login}</span>
+                <span>·</span>
+                <span>${formatDate(issue.created_at)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function showDetail(number) {
+      const issue = allIssues.find(i => i.number === number);
+      if (!issue) return;
+
+      const labels = issue.labels.map(l => `<span class="tag" style="background-color:#${l.color}20;color:#${l.color}">${l.name}</span>`).join('');
+      
+      document.getElementById('detail-body').innerHTML = `
+        <header class="mb-8">
+          <div class="flex flex-wrap gap-2 mb-4">${labels}</div>
+          <h1 class="text-3xl font-bold text-slate-900 dark:text-dark-text mb-4">${issue.title}</h1>
+          <div class="flex items-center gap-4 text-sm text-slate-500 dark:text-dark-muted">
+            <div class="flex items-center gap-2"><img src="${issue.user.avatar_url}" class="w-6 h-6 rounded-full"/><span>${issue.user.login}</span></div>
+            <span>·</span><span>${formatDate(issue.created_at)}</span><span>·</span><span>${issue.comments} 条评论</span>
+          </div>
+        </header>
+        <div class="bg-white dark:bg-dark-card rounded-xl p-8 border border-slate-200 dark:border-dark-border">${renderMarkdown(issue.body||'')}</div>
+      `;
+      
+      document.getElementById('detail-github-link').href = issue.html_url;
+      document.getElementById('detail-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetail() {
+      document.getElementById('detail-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    init();
+  </script>
+</body>
+</html>
