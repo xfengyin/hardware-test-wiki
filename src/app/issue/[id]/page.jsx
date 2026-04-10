@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { getIssueByNumber, getIssueComments, getIssueLabels, formatDate } from '@/lib/github';
 
-// 生成静态页面参数
 export async function generateStaticParams() {
   return [];
 }
@@ -11,57 +10,57 @@ export const revalidate = 300;
 export default async function IssuePage({ params }) {
   const issue = await getIssueByNumber(params.id);
   const comments = await getIssueComments(params.id);
-  
+
   if (!issue) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">🔍</div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-dark-text mb-2">
+          <div className="text-5xl mb-4">🔍</div>
+          <h2 className="text-2xl font-semibold text-vercel-black mb-2 tracking-tight">
             文章未找到
           </h2>
-          <p className="text-slate-500 dark:text-dark-muted mb-4">
+          <p className="text-vercel-gray-500 mb-6">
             该文章可能已被删除或不存在
           </p>
-          <Link href="/" className="btn btn-primary">
+          <Link href="/" className="btn btn-primary no-underline text-white">
             返回首页
           </Link>
         </div>
       </div>
     );
   }
-  
+
   const labels = getIssueLabels(issue);
 
   return (
     <div className="min-h-screen">
-      {/* 顶部导航 */}
-      <div className="bg-white dark:bg-dark-card border-b border-slate-200 dark:border-dark-border sticky top-16 z-40">
-        <div className="container-custom py-3">
-          <Link 
+      <div
+        className="bg-white sticky top-14 z-40"
+        style={{ boxShadow: 'rgba(0, 0, 0, 0.08) 0px 1px 0px 0px' }}
+      >
+        <div className="container-custom py-2.5">
+          <Link
             href="/"
-            className="inline-flex items-center gap-2 text-slate-600 dark:text-dark-muted hover:text-primary-500 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-vercel-gray-500 hover:text-vercel-black transition-colors no-underline font-normal"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             返回首页
           </Link>
         </div>
       </div>
-      
-      <div className="container-custom py-8">
-        <article className="max-w-4xl mx-auto">
-          {/* 标题区域 */}
+
+      <div className="container-custom py-10">
+        <article className="max-w-3xl mx-auto">
           <header className="mb-8">
-            {/* 标签 */}
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-1.5 mb-4">
               {labels.map((label) => (
-                <span 
+                <span
                   key={label.name}
-                  className="tag"
+                  className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium"
                   style={{
-                    backgroundColor: `#${label.color}20`,
+                    backgroundColor: `#${label.color}15`,
                     color: `#${label.color}`,
                   }}
                 >
@@ -69,71 +68,61 @@ export default async function IssuePage({ params }) {
                 </span>
               ))}
             </div>
-            
-            {/* 标题 */}
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-dark-text mb-4">
+
+            <h1 className="text-2xl md:text-3xl font-semibold text-vercel-black mb-4 tracking-tight leading-tight">
               {issue.title}
             </h1>
-            
-            {/* 作者信息 */}
-            <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-dark-muted">
+
+            <div className="flex items-center gap-3 text-sm text-vercel-gray-500">
               <div className="flex items-center gap-2">
-                <img 
-                  src={issue.user.avatar_url} 
+                <img
+                  src={issue.user.avatar_url}
                   alt={issue.user.login}
-                  className="w-6 h-6 rounded-full"
+                  className="w-5 h-5 rounded-full"
                 />
-                <span>{issue.user.login}</span>
+                <span className="font-medium text-vercel-black">{issue.user.login}</span>
               </div>
-              <span>·</span>
+              <span className="text-vercel-gray-400">·</span>
               <span>{formatDate(issue.created_at)}</span>
-              <span>·</span>
-              <span>{issue.comments} 条评论</span>
+              <span className="text-vercel-gray-400">·</span>
+              <span className="font-mono">{issue.comments} 条评论</span>
             </div>
           </header>
-          
-          {/* 内容 */}
-          <div className="prose prose-slate dark:prose-invert max-w-none">
-            <div 
-              className="bg-white dark:bg-dark-card rounded-xl p-8 border border-slate-200 dark:border-dark-border"
-              dangerouslySetInnerHTML={{ 
-                __html: formatMarkdown(issue.body || '') 
-              }}
-            />
-          </div>
-          
-          {/* 评论区 */}
+
+          <div
+            className="card p-6 sm:p-8"
+            dangerouslySetInnerHTML={{
+              __html: formatMarkdown(issue.body || ''),
+            }}
+          />
+
           {comments.length > 0 && (
             <section className="mt-12">
-              <h2 className="text-xl font-semibold text-slate-900 dark:text-dark-text mb-6">
-                💬 评论 ({comments.length})
+              <h2 className="text-lg font-semibold text-vercel-black mb-6 tracking-tight">
+                评论 ({comments.length})
               </h2>
-              
-              <div className="space-y-6">
+
+              <div className="space-y-4">
                 {comments.map((comment) => (
-                  <div 
-                    key={comment.id}
-                    className="bg-white dark:bg-dark-card rounded-xl p-6 border border-slate-200 dark:border-dark-border"
-                  >
+                  <div key={comment.id} className="card p-5">
                     <div className="flex items-center gap-3 mb-4">
-                      <img 
-                        src={comment.user.avatar_url} 
+                      <img
+                        src={comment.user.avatar_url}
                         alt={comment.user.login}
-                        className="w-8 h-8 rounded-full"
+                        className="w-6 h-6 rounded-full"
                       />
                       <div>
-                        <div className="font-medium text-slate-900 dark:text-dark-text">
+                        <span className="text-sm font-medium text-vercel-black">
                           {comment.user.login}
-                        </div>
-                        <div className="text-sm text-slate-500 dark:text-dark-muted">
+                        </span>
+                        <span className="text-xs text-vercel-gray-400 ml-2">
                           {formatDate(comment.created_at)}
-                        </div>
+                        </span>
                       </div>
                     </div>
-                    <div 
-                      className="prose prose-sm dark:prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ 
-                        __html: formatMarkdown(comment.body) 
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: formatMarkdown(comment.body),
                       }}
                     />
                   </div>
@@ -141,26 +130,20 @@ export default async function IssuePage({ params }) {
               </div>
             </section>
           )}
-          
-          {/* 底部操作 */}
-          <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-dark-border">
+
+          <footer className="mt-12 pt-6" style={{ borderTop: '1px solid #ebebeb' }}>
             <div className="flex items-center justify-between">
               <a
                 href={issue.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-500 hover:text-primary-600"
+                className="text-sm text-vercel-link-blue hover:text-vercel-blue transition-colors"
               >
                 在 GitHub 上查看 →
               </a>
-              
-              <div className="flex gap-4">
-                <span className="text-slate-500 dark:text-dark-muted">
-                  👍 {issue.reactions?.plus1 || 0}
-                </span>
-                <span className="text-slate-500 dark:text-dark-muted">
-                  👁️ {issue.views || 0}
-                </span>
+              <div className="flex gap-4 text-xs text-vercel-gray-500">
+                <span className="font-mono">👍 {issue.reactions?.plus1 || 0}</span>
+                <span className="font-mono">👁️ {issue.views || 0}</span>
               </div>
             </div>
           </footer>
@@ -170,55 +153,53 @@ export default async function IssuePage({ params }) {
   );
 }
 
-// 简单的 Markdown 格式化
 function formatMarkdown(text) {
   if (!text) return '';
-  
-  // 转义 HTML
   let html = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
-  
-  // 代码块
-  html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, 
-    '<pre><code class="language-$1">$2</code></pre>');
-  
-  // 行内代码
-  html = html.replace(/`([^`]+)`/g, 
-    '<code class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm font-mono">$1</code>');
-  
-  // 标题
-  html = html.replace(/^### (.+)$/gm, '<h3 class="text-lg font-semibold mt-6 mb-3">$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2 class="text-xl font-semibold mt-8 mb-4">$1</h2>');
-  html = html.replace(/^# (.+)$/gm, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>');
-  
-  // 粗体和斜体
+
+  html = html.replace(
+    /```(\w+)?\n([\s\S]*?)```/g,
+    '<pre><code class="language-$1">$2</code></pre>'
+  );
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  html = html.replace(
+    /^### (.+)$/gm,
+    '<h3 style="font-size:1.125rem;font-weight:600;margin-top:1.5rem;margin-bottom:0.75rem;color:#171717;letter-spacing:-0.01em">$1</h3>'
+  );
+  html = html.replace(
+    /^## (.+)$/gm,
+    '<h2 style="font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:1rem;color:#171717;letter-spacing:-0.02em">$1</h2>'
+  );
+  html = html.replace(
+    /^# (.+)$/gm,
+    '<h1 style="font-size:1.5rem;font-weight:600;margin-top:2rem;margin-bottom:1rem;color:#171717;letter-spacing:-0.02em">$1</h1>'
+  );
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-  
-  // 链接
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, 
-    '<a href="$2" class="text-primary-500 hover:underline" target="_blank" rel="noopener">$1</a>');
-  
-  // 列表
-  html = html.replace(/^- (.+)$/gm, '<li class="ml-4">$1</li>');
-  html = html.replace(/(<li.*<\/li>)/s, '<ul>$1</ul>');
-  
-  // 表格
+  html = html.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" style="color:#0072f5;text-decoration:underline;text-underline-offset:2px" target="_blank" rel="noopener">$1</a>'
+  );
+  html = html.replace(
+    /^- (.+)$/gm,
+    '<li style="margin-left:1rem;margin-bottom:0.25rem;color:#4d4d4d">$1</li>'
+  );
   html = html.replace(/\|(.+)\|/g, (match) => {
-    const cells = match.split('|').filter(c => c.trim());
-    if (cells.some(c => c.trim().match(/^-+$/))) {
-      return '';
-    }
-    const row = cells.map(c => `<td class="px-4 py-2 border border-slate-200 dark:border-dark-border">${c.trim()}</td>`).join('');
+    const cells = match.split('|').filter((c) => c.trim());
+    if (cells.some((c) => c.trim().match(/^-+$/))) return '';
+    const row = cells
+      .map((c) => `<td style="padding:8px 16px;border-bottom:1px solid #ebebeb;font-size:0.875rem;color:#4d4d4d">${c.trim()}</td>`)
+      .join('');
     return `<tr>${row}</tr>`;
   });
-  html = html.replace(/(<tr>.*<\/tr>)/s, '<table class="w-full border-collapse my-4">$1</table>');
-  
-  // 段落
-  html = html.replace(/\n\n/g, '</p><p class="my-4">');
-  html = '<p class="my-4">' + html + '</p>';
-  
+  html = html.replace(
+    /(<tr>.*<\/tr>)/s,
+    '<table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.875rem">$1</table>'
+  );
+  html = html.replace(/\n\n/g, '</p><p style="margin:1rem 0;color:#4d4d4d;line-height:1.75">');
+  html = '<p style="margin:1rem 0;color:#4d4d4d;line-height:1.75">' + html + '</p>';
   return html;
 }

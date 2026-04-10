@@ -1,90 +1,150 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Geist Font — Vercel Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary: #0EA5E9;
-  --accent: #10B981;
+  --primary: #0070f3;
+  --accent: #171717;
 }
 
 @layer base {
   html {
     @apply scroll-smooth;
+    font-feature-settings: "liga" 1;
   }
-  
+
   body {
-    @apply bg-slate-50 text-slate-900 dark:bg-dark-bg dark:text-dark-text;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply bg-white text-vercel-black font-sans antialiased;
+    font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  ::selection {
+    background: hsla(0, 0%, 95%, 1);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsla(212, 100%, 48%, 1);
+    outline-offset: 2px;
   }
 }
 
 @layer components {
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-content mx-auto px-5 sm:px-6 lg:px-8;
   }
-  
+
   .card {
-    @apply bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-dark-border shadow-sm hover:shadow-lg transition-all duration-300;
+    @apply bg-white rounded-8 font-sans transition-all duration-200;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px,
+                rgba(0, 0, 0, 0.04) 0px 2px 2px,
+                #fafafa 0px 0px 0px 1px;
   }
-  
+
+  .card:hover {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 0px 1px,
+                rgba(0, 0, 0, 0.06) 0px 4px 6px,
+                #fafafa 0px 0px 0px 1px;
+  }
+
   .card-gradient {
     @apply relative overflow-hidden;
   }
-  
+
   .card-gradient::before {
     content: '';
-    @apply absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 to-cyan-400;
+    @apply absolute top-0 left-0 right-0 h-0.5 bg-vercel-blue;
   }
-  
+
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-6 font-medium text-sm transition-all duration-200;
   }
-  
+
   .btn-primary {
-    @apply bg-primary-500 text-white hover:bg-primary-600 active:scale-95;
+    @apply bg-vercel-black text-white hover:bg-black active:scale-[0.98];
   }
-  
+
+  .btn-secondary {
+    @apply bg-white text-vercel-black;
+    box-shadow: rgb(235, 235, 235) 0px 0px 0px 1px;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-gray-50;
+  }
+
   .tag {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
-  
+
   .tag-hardware {
-    @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400;
+    @apply bg-vercel-blue-light text-vercel-blue-dark;
   }
-  
+
   .tag-article {
-    @apply bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400;
+    @apply bg-vercel-blue-light text-vercel-blue-dark;
   }
-  
+
   .tag-question {
-    @apply bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400;
+    @apply bg-gray-100 text-vercel-gray-600;
   }
-  
+
   .input-search {
-    @apply w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card text-slate-900 dark:text-dark-text placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all;
+    @apply w-full px-4 py-3 rounded-8 bg-white text-vercel-black placeholder-vercel-gray-400 transition-all;
+    box-shadow: rgb(235, 235, 235) 0px 0px 0px 1px;
+  }
+
+  .input-search:focus {
+    @apply outline-none;
+    box-shadow: rgb(235, 235, 235) 0px 0px 0px 1px,
+                0px 0px 0px 2px hsla(212, 100%, 48%, 1);
   }
 }
 
-/* 代码高亮样式 */
 pre {
-  @apply bg-slate-900 dark:bg-slate-950 rounded-lg p-4 overflow-x-auto;
+  @apply bg-vercel-black rounded-8 p-5 overflow-x-auto my-6;
+}
+
+pre code {
+  @apply text-sm font-mono text-gray-300;
+  font-feature-settings: "liga" 1;
 }
 
 code {
   @apply font-mono text-sm;
 }
 
-/* 网格背景 */
+:not(pre) > code {
+  @apply px-1.5 py-0.5 bg-vercel-gray-50 rounded-4 text-vercel-black text-[0.875em];
+  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
 .grid-bg {
-  background-image: 
-    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
   background-size: 50px 50px;
 }
 
-/* 骨架屏 */
 .skeleton {
-  @apply animate-pulse bg-slate-200 dark:bg-dark-border rounded;
+  @apply animate-pulse bg-vercel-gray-100 rounded-4;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+a {
+  @apply text-vercel-link-blue;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  font-weight: 500;
 }

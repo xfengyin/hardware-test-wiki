@@ -2,64 +2,57 @@
 
 ## 设计理念
 
-**科技感 + 极简主义** - 契合硬件测试的专业氛围，同时保持现代Web设计的简洁优雅。
+**Vercel Design System** — 黑白精确，极简技术感，developer-first。  
+遵循 Vercel 设计系统规范，以纯粹的黑白灰构建专业硬件测试知识平台。
 
 ---
 
 ## 🎨 色彩系统
 
-### 主色调
+### 主色调 — Vercel Palette
 
 | 用途 | 颜色 | Hex |
 |------|------|-----|
-| 主色 (Primary) | 科技蓝 | `#0EA5E9` |
-| 辅助色 (Secondary) | 深空灰 | `#1E293B` |
-| 强调色 (Accent) | 电路绿 | `#10B981` |
-| 警告色 | 琥珀橙 | `#F59E0B` |
-| 错误色 | 故障红 | `#EF4444` |
+| 主色 (Primary) | Vercel Black | `#171717` |
+| 强调色 (Accent) | Link Blue | `#0070f3` |
+| 背景 | Pure White | `#FFFFFF` |
+| 次文字 | Gray 600 | `#4d4d4d` |
+| 辅助文字 | Gray 500 | `#666666` |
 
-### 暗色模式
-
-| 用途 | 颜色 | Hex |
-|------|------|-----|
-| 背景 | 深空黑 | `#0F172A` |
-| 卡片 | 暗灰 | `#1E293B` |
-| 边框 | 边框灰 | `#334155` |
-| 文字 | 亮灰 | `#F1F5F9` |
-
-### 亮色模式
+### 灰度系统
 
 | 用途 | 颜色 | Hex |
 |------|------|-----|
-| 背景 | 纯净白 | `#FFFFFF` |
-| 卡片 | 浅灰 | `#F8FAFC` |
-| 边框 | 边框浅灰 | `#E2E8F0` |
-| 文字 | 深灰 | `#1E293B` |
+| 边框/分隔线 | Gray 100 | `#ebebeb` |
+| 微妙表面 | Gray 50 | `#fafafa` |
+| 占位文字 | Gray 400 | `#808080` |
+| 辅助文字 | Gray 500 | `#666666` |
+| 次文字 | Gray 600 | `#4d4d4d` |
+| 主文字 | Vercel Black | `#171717` |
+
+### Badge/标签色
+
+| 用途 | 背景 | 文字 |
+|------|------|------|
+| 蓝色标签 | `#ebf5ff` | `#0068d6` |
+| 灰色标签 | `#fafafa` | `#666666` |
 
 ---
 
 ## 🔤 字体系统
 
 ```css
-/* 标题字体 - 科技感 */
-font-family: 'JetBrains Mono', 'Fira Code', monospace;
+/* 主字体 — Geist Sans (几何无衬线) */
+font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-/* 正文字体 - 易读性 */
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+/* 等宽字体 — Geist Mono */
+font-family: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
 
-/* 代码字体 */
-font-family: 'JetBrains Mono', 'Source Code Pro', monospace;
-
-/* 字号 */
---text-xs: 0.75rem;    /* 12px - 辅助信息 */
---text-sm: 0.875rem;   /* 14px - 副标题 */
---text-base: 1rem;     /* 16px - 正文 */
---text-lg: 1.125rem;   /* 18px - 小标题 */
---text-xl: 1.25rem;    /* 20px - 章节标题 */
---text-2xl: 1.5rem;    /* 24px - 页面标题 */
---text-3xl: 1.875rem;  /* 30px - Hero 标题 */
---text-4xl: 2.25rem;   /* 36px - 大标题 */
+/* OpenType 特性 */
+font-feature-settings: "liga" 1;  /* 连字 — 全局启用 */
 ```
+
+**三字重体系**: 400 (阅读), 500 (交互), 600 (标题)
 
 ---
 
@@ -67,241 +60,47 @@ font-family: 'JetBrains Mono', 'Source Code Pro', monospace;
 
 ### 1. Issue 卡片 (IssueCard)
 
-```
-┌──────────────────────────────────────────────────────────┐
-│  🏷️ hardware     🏷️ article                    📅 2024  │
-├──────────────────────────────────────────────────────────┤
-│                                                          │
-│  示波器基础入门：如何正确设置采样率和时基                │
-│                                                          │
-│  示波器是硬件工程师最常用的调试工具之一，本文介绍...    │
-│                                                          │
-├──────────────────────────────────────────────────────────┤
-│  👁️ 1.2k    💬 23    👍 156    👤 张可                  │
-└──────────────────────────────────────────────────────────┘
-```
-
-**设计细节：**
-- 圆角: `rounded-xl` (12px)
-- 阴影: `shadow-lg hover:shadow-xl` (悬停时增强)
-- 边框: `border border-slate-200 dark:border-slate-700`
-- 悬停效果: `transform hover:-translate-y-1` (上浮动画)
-- 渐变: 顶部装饰条 `bg-gradient-to-r from-blue-500 to-cyan-400`
+- 圆角: 8px
+- 边框: shadow-as-border `rgba(0,0,0,0.08) 0px 0px 0px 1px`
+- 阴影栈: `border + elevation + inner #fafafa ring`
+- 悬停: shadow 加深
+- 顶部装饰: 0.5px 蓝色条 `#0070f3`
 
 ### 2. 导航栏 (Header)
 
-```
-┌──────────────────────────────────────────────────────────┐
-│  ⚡ HardwareTest        🔍 搜索...      🌙  👤          │
-└──────────────────────────────────────────────────────────┘
-```
-
-**设计细节：**
 - 固定顶部 `sticky top-0 z-50`
-- 毛玻璃效果 `backdrop-blur-lg bg-white/80`
-- 底部阴影 `shadow-sm`
+- 毛玻璃效果 `bg-white/90 backdrop-blur-md`
+- 边框: shadow-as-bottom
+- 高度: h-14
+- Logo: 黑色方块+⚡
+- CTA: 黑色实心按钮
 
-### 3. 标签 (Tag)
+### 3. 标签 (Tag/Pill Badge)
 
-```
-┌─────────────┐
-│ 🔌 hardware │
-└─────────────┘
+- 圆角: `rounded-full` (9999px pill)
+- 内边距: `px-2 py-0.5`
+- 字号: 11px weight 500
 
-┌─────────────┐
-│ 📝 article  │
-└─────────────┘
+### 4. 按钮 (Button)
 
-┌─────────────┐
-│ ❓ question  │
-└─────────────┘
-```
-
-**设计细节：**
-- 圆角: `rounded-full`
-- 内边距: `px-3 py-1`
-- 背景: 根据标签类型动态配色
-- hover: `scale-105` 缩放效果
-
-### 4. 首页 Hero 区域
-
-```
-╔══════════════════════════════════════════════════════════╗
-║                                                          ║
-║     ⚡ 硬件测试知识库                                    ║
-║                                                          ║
-║     收录硬件测试工程师的实战经验与技术分享               ║
-║                                                          ║
-║     ┌──────────────────────────────────────┐            ║
-║     │ 🔍 搜索知识文章...                    │            ║
-║     └──────────────────────────────────────┘            ║
-║                                                          ║
-║     📚 128 篇   👥 89 位贡献者   🔧 持续更新中          ║
-║                                                          ║
-╚══════════════════════════════════════════════════════════╝
-```
-
-**设计细节：**
-- 背景: 渐变网格动画 `bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900`
-- 网格图案: 使用 CSS `background-image` 创建科技感网格
-- 搜索框: 居中大输入框，带阴影和聚焦发光效果
-- 统计数字: 使用等宽字体，动画计数效果
-
-### 5. Issue 详情页
-
-```
-┌──────────────────────────────────────────────────────────┐
-│  ← 返回                                      🌙 分享    │
-├──────────────────────────────────────────────────────────┤
-│                                                          │
-│  示波器基础入门：如何正确设置采样率和时基                │
-│                                                          │
-│  ┌─────────────────────────────────────────────────────┐│
-│  │ 🏷️ hardware  📅 2024-01-15  👤 张可               ││
-│  └─────────────────────────────────────────────────────┘│
-│                                                          │
-│  ────────────────────────────────────────────────────   │
-│                                                          │
-│  ## 什么是采样率？                                      │
-│                                                          │
-│  采样率是指示波器每秒采样的数据点数量...                │
-│                                                          │
-│  ```c                                                    │
-│  // 采样率计算公式                                       │
-│  SampleRate = TimeDiv / SamplePoints                    │
-│  ```                                                     │
-│                                                          │
-│  ## 示波器推荐                                           │
-│                                                          │
-│  | 型号 | 带宽 | 采样率 |                               │
-│  |------|------|--------|                               │
-│  | Keysight | 100MHz | 2GSa/s |                         │
-│  | Tektronix | 70MHz | 1GSa/s |                         │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
-```
+- **Primary**: bg `#171717`, text `#fff`, radius 6px
+- **Secondary**: bg `#fff`, shadow-border, radius 6px
 
 ---
 
-## ✨ 动效设计
+## 🔲 深度系统 (Shadow-as-Border)
 
-### 页面加载动画
-
-```css
-/* 渐入效果 */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 交错动画 - 列表项延迟 */
-.issue-card:nth-child(1) { animation-delay: 0ms; }
-.issue-card:nth-child(2) { animation-delay: 50ms; }
-.issue-card:nth-child(3) { animation-delay: 100ms; }
-/* ... 以此类推 */
-```
-
-### 微交互
-
-| 元素 | 交互 | 效果 |
+| 层级 | 处理 | 用途 |
 |------|------|------|
-| 按钮 | hover | 背景加深 + 轻微上浮 |
-| 卡片 | hover | 阴影增强 + 边框发光 |
-| 链接 | hover | 下划线展开动画 |
-| 标签 | hover | 轻微缩放 |
-| 图标 | hover | 旋转或弹跳 |
-
-### 骨架屏加载
-
-```jsx
-// 加载时显示骨架屏
-<div className="animate-pulse">
-  <div className="h-4 bg-slate-200 rounded w-3/4"></div>
-  <div className="h-4 bg-slate-200 rounded w-1/2 mt-2"></div>
-</div>
-```
+| Ring | `rgba(0,0,0,0.08) 0px 0px 0px 1px` | 替代传统边框 |
+| Subtle Card | Ring + `rgba(0,0,0,0.04) 0px 2px 2px` | 标准卡片 |
+| Full Card | Ring + Subtle + inner `#fafafa` ring | 重点卡片 |
+| Focus | `2px solid hsla(212,100%,48%,1)` | 键盘焦点 |
 
 ---
 
-## 📱 响应式设计
+## 📐 布局原则
 
-| 断点 | 宽度 | 布局 |
-|------|------|------|
-| sm | 640px | 单列 |
-| md | 768px | 单列 + 侧边栏 |
-| lg | 1024px | 双列网格 |
-| xl | 1280px | 三列网格 |
-| 2xl | 1536px | 宽屏布局 |
-
----
-
-## 🎯 重点页面设计
-
-### 首页布局
-
-```
-┌────────────────────────────────────────────────────────┐
-│                      Header                            │
-├──────────────┬─────────────────────────────────────────┤
-│              │                                         │
-│   侧边栏     │           主要内容区                     │
-│              │                                         │
-│  🏷️ 标签    │   ┌─────────┐ ┌─────────┐               │
-│  - hardware │   │ Issue   │ │ Issue   │               │
-│  - article  │   │ Card    │ │ Card    │               │
-│  - question │   └─────────┘ └─────────┘               │
-│              │                                         │
-│  📅 时间线  │   ┌─────────┐ ┌─────────┐               │
-│  - 最新     │   │ Issue   │ │ Issue   │               │
-│  - 热门     │   │ Card    │ │ Card    │               │
-│              │   └─────────┘ └─────────┘               │
-├──────────────┴─────────────────────────────────────────┤
-│                      Footer                            │
-└────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🛠️ 技术实现
-
-### Tailwind 配置
-
-```javascript
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-        },
-        accent: {
-          500: '#10b981',
-        }
-      },
-      fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-        sans: ['Inter', -apple-system, 'sans-serif'],
-      },
-      animation: {
-        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      }
-    }
-  }
-}
-```
-
----
-
-这个设计方案符合你的需求吗？需要我开始实现具体代码吗？
+- 基础单位: 8px
+- 容器最大宽度: 1200px
+- 画廊式留白，分隔依靠 shadow-border 和间距
